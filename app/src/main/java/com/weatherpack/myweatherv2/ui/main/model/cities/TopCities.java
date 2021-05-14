@@ -1,9 +1,9 @@
-package com.weatherpack.myweatherv2.ui.main.model.location;
+package com.weatherpack.myweatherv2.ui.main.model.cities;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AccuWeatherLocation {
+public class TopCities {
 
     private int Version;
     private String Key;
@@ -24,7 +24,7 @@ public class AccuWeatherLocation {
 
     private boolean IsAlias;
 
-    private List<SupplementalAdminAreas> SupplementalAdminAreas;
+    private List<String> SupplementalAdminAreas;
     private List<String> DataSets;
 
     public void setVersion(int Version) {
@@ -131,11 +131,11 @@ public class AccuWeatherLocation {
         return this.IsAlias;
     }
 
-    public void setSupplementalAdminAreas(List<SupplementalAdminAreas> SupplementalAdminAreas) {
+    public void setSupplementalAdminAreas(List<String> SupplementalAdminAreas) {
         this.SupplementalAdminAreas = SupplementalAdminAreas;
     }
 
-    public List<SupplementalAdminAreas> getSupplementalAdminAreas() {
+    public List<String> getSupplementalAdminAreas() {
         return this.SupplementalAdminAreas;
     }
 
@@ -146,4 +146,6 @@ public class AccuWeatherLocation {
     public List<String> getDataSets() {
         return this.DataSets;
     }
+
 }
+

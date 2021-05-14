@@ -2,8 +2,12 @@ package com.weatherpack.myweatherv2.ui.main;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -19,11 +23,13 @@ import androidx.core.app.ActivityCompat;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.os.Environment;
 import android.os.Looper;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.weatherpack.myweatherv2.BuildConfig;
@@ -34,6 +40,8 @@ import com.weatherpack.myweatherv2.ui.main.model.location.AccuWeatherLocation;
 import com.weatherpack.myweatherv2.ui.main.retrofit.IAccuWeather;
 import com.weatherpack.myweatherv2.ui.main.retrofit.RetrofitClient;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -50,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
     //retrofit (RxJava)
     private IAccuWeather weatherService;
     private CompositeDisposable compositeDisposable;
+
+    private Button btnShare;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +84,19 @@ public class MainActivity extends AppCompatActivity {
         fusedLocationProviderClient =
                 LocationServices.getFusedLocationProviderClient(this);
         checkPermissionsAndRequestLocation();
+
+        View rootView = getWindow().getDecorView().findViewById(android.R.id.content);
+
+        btnShare = findViewById(R.id.btnShare);
+
+//        btnShare.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Bitmap bitmap = getScreenShot();
+//                saveScreenshot(bitmap);
+//                shareImage();
+//            }
+//        });
     }
 
     private void checkPermissionsAndRequestLocation() {
@@ -186,6 +209,46 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(sectionsPagerAdapter);
         TabLayout tabs = findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
+    }
+
+    public static Bitmap getScreenShot(View view) {
+        View screenView = view.getRootView();
+        screenView.setDrawingCacheEnabled(true);
+        Bitmap bitmap = Bitmap.createBitmap(screenView.getDrawingCache());
+        screenView.setDrawingCacheEnabled(false);
+        return bitmap;
+    }
+
+    public static void saveScreenshot(Bitmap bm, String fileName){
+        final String dirPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Screenshots";
+        File dir = new File(dirPath);
+        if(!dir.exists())
+            dir.mkdirs();
+        File file = new File(dirPath, fileName);
+        try {
+            FileOutputStream fOut = new FileOutputStream(file);
+            bm.compress(Bitmap.CompressFormat.PNG, 85, fOut);
+            fOut.flush();
+            fOut.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void shareImage(File file){
+        Uri uri = Uri.fromFile(file);
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_SEND);
+        intent.setType("image/*");
+
+        intent.putExtra(android.content.Intent.EXTRA_SUBJECT, "");
+        intent.putExtra(android.content.Intent.EXTRA_TEXT, "");
+        intent.putExtra(Intent.EXTRA_STREAM, uri);
+        try {
+            startActivity(Intent.createChooser(intent, "Share Screenshot"));
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(MainActivity.this, "No App Available", Toast.LENGTH_SHORT).show();
+        }
     }
 
 }

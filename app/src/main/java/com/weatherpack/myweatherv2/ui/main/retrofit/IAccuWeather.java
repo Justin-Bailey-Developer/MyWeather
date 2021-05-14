@@ -1,6 +1,7 @@
 package com.weatherpack.myweatherv2.ui.main.retrofit;
 
 import com.weatherpack.myweatherv2.ui.main.model.FiveDayForecast;
+import com.weatherpack.myweatherv2.ui.main.model.cities.TopCities;
 import com.weatherpack.myweatherv2.ui.main.model.currentWeather.CurrentWeather;
 import com.weatherpack.myweatherv2.ui.main.model.location.AccuWeatherLocation;
 
@@ -46,5 +47,16 @@ public interface IAccuWeather {
     Observable<AccuWeatherLocation> getLocationByPosition(
             @Query("q") String geoposition,
             @Query("apikey") String apiKey);
+
+    /**
+     * Gets the top 150 cities.
+     * @param apiKey The api key to use
+     * @return The list of top 150 cities
+     */
+    @GET("locations/v1/topcities/150")
+    Observable<List<TopCities>> getTopCities(
+            @Query("apikey") String apiKey);
+
+
 
 }

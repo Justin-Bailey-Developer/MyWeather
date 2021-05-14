@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.weatherpack.myweatherv2.R;
+import com.weatherpack.myweatherv2.ui.main.model.cities.CityWeatherFragment;
 import com.weatherpack.myweatherv2.ui.main.model.currentWeather.CurrentWeatherFragment;
 
 /**
@@ -52,6 +53,9 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
             case 1:
                 return new DailyForecastsFragment();
+
+            case 2:
+                return new CityWeatherFragment();
 
             default:
                  return PlaceholderFragment.newInstance(position + 1);

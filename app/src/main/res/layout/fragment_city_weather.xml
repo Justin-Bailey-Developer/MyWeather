@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.main.model.cities.CityWeatherFragment">
+
+    <com.mancj.materialsearchbar.MaterialSearchBar
+        android:id="@+id/sb_city_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="100px"
+        app:mt_hint="City Name"
+        app:mt_searchBarColor="@android:color/transparent"
+        app:mt_textColor="@android:color/white" />
+
+    <TextView
+        android:id="@+id/tv_locationName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="city"
+        android:textSize="30dp" />
+
+    <TextView
+        android:id="@+id/tv_weatherText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="description"
+        android:textSize="20dp"
+        android:layout_marginTop="20px"/>
+
+    <TextView
+        android:id="@+id/tv_temperatureValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="temp value"
+        android:textSize="20dp"
+        android:layout_marginTop="20px"/>
+
+
+</LinearLayout>

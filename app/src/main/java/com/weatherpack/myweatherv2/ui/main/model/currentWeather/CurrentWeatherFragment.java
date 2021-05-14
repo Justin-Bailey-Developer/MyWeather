@@ -77,6 +77,7 @@ public class CurrentWeatherFragment extends Fragment {
      */
     // TODO: Rename and change types and number of parameters
     public static CurrentWeatherFragment newInstance(String param1, String param2) {
+
         CurrentWeatherFragment fragment = new CurrentWeatherFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
@@ -103,7 +104,6 @@ public class CurrentWeatherFragment extends Fragment {
 
         tv_weatherText = view.findViewById(R.id.tv_weatherText);
         tv_temperatureValue = view.findViewById(R.id.tv_temperatureValue);
-
 
         // Make the call using Retrofit and RxJava
         compositeDisposable.add(weatherService.getCurrentConditions
